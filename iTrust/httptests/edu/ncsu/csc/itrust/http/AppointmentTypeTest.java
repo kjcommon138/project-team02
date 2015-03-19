@@ -19,7 +19,7 @@ import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
 public class AppointmentTypeTest extends iTrustHTTPTest {
 	
 	protected void setUp() throws Exception {
-		super.setUp(); // clear tables is called in super
+		super.setUp(); // clear stables is called in super
 		gen.standardData();
 	}
 	
