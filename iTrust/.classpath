@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="unittests"/>
 	<classpathentry kind="src" path="httptests"/>
+	<classpathentry kind="src" path="seleniumtests"/>
 	<classpathentry exported="true" kind="lib" path="testing-libs/cglib-nodep-2.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="testing-libs/easymock.jar"/>
 	<classpathentry exported="true" kind="lib" path="testing-libs/easymockclassextension.jar"/>
