@@ -22,7 +22,6 @@ public class Test1 {
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
  
         //Launch the Online Store Website
- 
         driver.get("http://localhost:8080/iTrust");
         
         System.out.println(driver.getTitle());
