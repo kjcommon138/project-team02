@@ -78,7 +78,7 @@ public class GetVisitRemindersTest extends iTrustHTTPTest {
 		wr = wc.getCurrentPage();
 		
 		assertEquals("iTrust - Visit Reminders", wr.getTitle());
-		assertEquals(4, wr.getTables().length);
+		assertEquals(7, wr.getTables().length);
 		
 		boolean thisYear = DateUtil.currentlyInMonthRange(8, 11);
 		String pretext = "Missed";

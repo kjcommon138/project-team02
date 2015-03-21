@@ -161,6 +161,7 @@ public class CalendarTest extends iTrustHTTPTest {
 				count++;
 				if(count == 2) {
 					wr = link.click();
+					System.out.println(wr.getURL()); //add this?
 					break;
 				}
 				

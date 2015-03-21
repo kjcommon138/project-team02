@@ -10,11 +10,13 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import junit.framework.TestCase;
 
+import com.meterware.httpunit.HttpUnitOptions;
 import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebForm;
 import com.meterware.httpunit.WebResponse;
 
 import edu.ncsu.csc.itrust.beans.TransactionBean;
+import edu.ncsu.csc.itrust.datagenerators.TestDataGenerator;
 import edu.ncsu.csc.itrust.enums.TransactionType;
 import edu.ncsu.csc.itrust.exception.DBException;
 import edu.ncsu.csc.itrust.testutils.TestDAOFactory;
@@ -30,14 +32,14 @@ abstract public class iTrustSeleniumTest extends TestCase {
 	/**ADDRESS*/
 	public static final String ADDRESS = "http://localhost:8080/iTrust/";
 	/**gen*/
-	//protected TestDataGenerator gen = new TestDataGenerator();
+	protected TestDataGenerator gen = new TestDataGenerator();
 
 	@Override
 	protected void setUp() throws Exception {
-		//HttpUnitOptions.clearScriptErrorMessages();
-		//HttpUnitOptions.setScriptingEnabled(true);
-		//HttpUnitOptions.setExceptionsThrownOnScriptError(false);
-		//gen.clearAllTables();
+		HttpUnitOptions.clearScriptErrorMessages();
+		HttpUnitOptions.setScriptingEnabled(true);
+		HttpUnitOptions.setExceptionsThrownOnScriptError(false);
+		gen.clearAllTables();
 	}
 
 	/**
@@ -61,7 +63,7 @@ abstract public class iTrustSeleniumTest extends TestCase {
         if (driver.getTitle().equals("iTrust Login"))
 			throw new IllegalArgumentException("Error logging in, user not in database?");
         
-        //assertLogged(TransactionType.LOGIN_SUCCESS, Long.parseLong(username), Long.parseLong(username), "");
+        assertLogged(TransactionType.LOGIN_SUCCESS, Long.parseLong(username), Long.parseLong(username), "");
 		
         return driver;
 	}
@@ -74,7 +76,7 @@ abstract public class iTrustSeleniumTest extends TestCase {
 	 * @param addedInfo addedInfo
 	 * @throws DBException
 	 */
-	/*public static void assertLogged(TransactionType code, long loggedInMID,
+	public static void assertLogged(TransactionType code, long loggedInMID,
 			long secondaryMID, String addedInfo)
 			throws DBException {
 		List<TransactionBean> transList = TestDAOFactory.getTestInstance().getTransactionDAO().getAllTransactions();
@@ -93,7 +95,7 @@ abstract public class iTrustSeleniumTest extends TestCase {
 				}
 		}
 		fail("Event not logged as specified.");
-	}*/
+	}
 
 	/**
 	 * assertNotLogged
@@ -103,7 +105,7 @@ abstract public class iTrustSeleniumTest extends TestCase {
 	 * @param addedInfo addedInfo
 	 * @throws DBException
 	 */
-	/*public static void assertNotLogged(TransactionType code, long loggedInMID,
+	public static void assertNotLogged(TransactionType code, long loggedInMID,
 			long secondaryMID, String addedInfo)
 			throws DBException {
 		List<TransactionBean> transList = TestDAOFactory.getTestInstance().getTransactionDAO().getAllTransactions();
@@ -118,5 +120,5 @@ abstract public class iTrustSeleniumTest extends TestCase {
 					return;
 				}
 		}
-	}*/
+	}
 }

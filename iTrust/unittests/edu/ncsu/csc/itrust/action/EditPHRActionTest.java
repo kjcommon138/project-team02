@@ -50,7 +50,7 @@ public class EditPHRActionTest extends TestCase {
 		assertEquals(2L, action.getPid());
 		assertEquals(2L, action.getPatient().getMID());
 		assertEquals(2, action.getAllergies().size());
-		assertEquals(9, action.getFamily().size());
+		assertEquals(10, action.getFamily().size());
 		assertEquals(2, action.getAllHealthRecords().size());
 //		assertTransactionOnly(TransactionType.VIEW_RECORDS, 9000000000L, 2L, "Viewed patient records");
 		assertEquals(12, action.getAllOfficeVisits().size());

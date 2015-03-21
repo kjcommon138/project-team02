@@ -120,7 +120,7 @@ public class GetVisitRemindersActionTest extends TestCase {
 		action = new GetVisitRemindersAction(factory, 9000000000L);
 		
 		//Returns reminders for NoRecords Has, Bad Horse, Care Needs, and Random Person
-		assertEquals(4, action.getVisitReminders(GetVisitRemindersAction.ReminderType.FLU_SHOT_NEEDERS).size());
+		assertEquals(7, action.getVisitReminders(GetVisitRemindersAction.ReminderType.FLU_SHOT_NEEDERS).size());
 	}
 	
 	/**

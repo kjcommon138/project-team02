@@ -50,7 +50,7 @@ public class ViewMyRecordsActionTest extends TestCase {
 	public void testViewMyRecords() throws Exception {
 		assertEquals(pid, action.getPatient().getMID());
 		assertEquals(2, action.getAllergies().size());
-		assertEquals(9, action.getFamily().size());
+		assertEquals(10, action.getFamily().size());
 		assertEquals(2, action.getAllHealthRecords().size());
 		assertEquals(12, action.getAllOfficeVisits().size());
 		assertEquals(6, action.getRepresented().size());
@@ -59,14 +59,14 @@ public class ViewMyRecordsActionTest extends TestCase {
 		assertEquals(1, action.getLabs().size());
 		action.representPatient("1");
 		assertEquals(1L, action.getPatient().getMID());
-		assertTrue(action.doesFamilyMemberHaveHighBP(fmBean));
+		assertFalse(action.doesFamilyMemberHaveHighBP(fmBean));
 		assertTrue(action.doesFamilyMemberHaveDiabetes(fmBean));
-		assertTrue(action.isFamilyMemberSmoker(fmBean));
+		assertFalse(action.isFamilyMemberSmoker(fmBean));
 		assertFalse(action.doesFamilyMemberHaveCancer(fmBean));
 		assertFalse(action.doesFamilyMemberHaveHighCholesterol(fmBean));
 		assertFalse(action.doesFamilyMemberHaveHeartDisease(fmBean));
-		assertTrue(action.getFamilyMemberCOD(fmBean).contains("Diabetes"));
-		assertEquals(5, new ViewMyRecordsAction(factory, 5L).getFamilyHistory().size());
+		assertFalse(action.getFamilyMemberCOD(fmBean).contains("Diabetes"));
+		assertEquals(11, new ViewMyRecordsAction(factory, 5L).getFamilyHistory().size());
 	}
 	
 	public void testViewNonExistantRecords()  {
@@ -134,13 +134,13 @@ public class ViewMyRecordsActionTest extends TestCase {
 	public void testGetFamily() throws ITrustException {
 		List<FamilyMemberBean> fmbList = action.getFamily();
 		
-		assertEquals(9, fmbList.size());
+		assertEquals(10, fmbList.size());
 	}
 	
 	public void testGetFamilyHistory() throws ITrustException {
 		List<FamilyMemberBean> fmbList = action.getFamilyHistory();
 		
-		assertEquals(5, fmbList.size());
+		assertEquals(6, fmbList.size());
 	}
 	
 	public void testGetAllHealthRecords() throws ITrustException {
@@ -194,7 +194,7 @@ public class ViewMyRecordsActionTest extends TestCase {
 	}
 	
 	public void testDoesFamilyMemberHaveHighBP() throws ITrustException {
-		assertTrue(action.doesFamilyMemberHaveHighBP(fmBean));
+		assertFalse(action.doesFamilyMemberHaveHighBP(fmBean));
 	}
 	
 	public void testDoesFamilyMemberHaveHighCholesterol() throws ITrustException {
@@ -214,11 +214,11 @@ public class ViewMyRecordsActionTest extends TestCase {
 	}
 
 	public void testIsFamilyMemberSmoker() throws ITrustException {
-		assertTrue(action.isFamilyMemberSmoker(fmBean));
+		assertFalse(action.isFamilyMemberSmoker(fmBean));
 	}
 
 	public void testGetFamilyMemberCOD() throws ITrustException {
-		assertEquals("Diabetes with ketoacidosis", action.getFamilyMemberCOD(fmBean));
+		assertEquals("", action.getFamilyMemberCOD(fmBean));
 	}
 	
 	public void testGetSpecificLabs() throws ITrustException {
