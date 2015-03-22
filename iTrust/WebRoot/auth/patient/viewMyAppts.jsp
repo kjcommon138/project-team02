@@ -31,7 +31,7 @@ pageTitle = "iTrust - View My Messages";
 	session.setAttribute("appts", appts);
 	if (appts.size() > 0) {
 %>	
-	<table class="fancyTable">
+	<table name="apptTable" class="fancyTable">
 		<tr>
 			<th>Patient</th>
 			<th>Appointment Type</th>

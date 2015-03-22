@@ -29,7 +29,7 @@ pageTitle = "iTrust - View My Messages";
 	List<ApptBean> appts = action.getMyAppointments();
 	session.setAttribute("appts", appts);
 	if (appts.size() > 0) { %>	
-	<table class="fTable">
+	<table name="apptTable" class="fTable">
 		<tr>
 			<th>Patient</th>
 			<th>Appointment Type</th>
