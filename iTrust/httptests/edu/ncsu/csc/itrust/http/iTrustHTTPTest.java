@@ -83,7 +83,7 @@ abstract public class iTrustHTTPTest extends TestCase {
 					if(!t.getAddedInfo().trim().contains(addedInfo.trim()))
 					{
 						fail("Additional Information is not logged correctly.");
-					}
+					}					
 					return;
 				}
 		}

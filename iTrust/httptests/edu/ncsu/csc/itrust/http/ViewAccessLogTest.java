@@ -303,7 +303,7 @@ public class ViewAccessLogTest extends iTrustHTTPTest {
 		wr = wr.getLinkWith("Logout").click();
 		assertEquals("iTrust - Login", wr.getTitle());
 		
-		wc = login("5", "pw");
+		wc = login("4", "pw");
 		wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
@@ -311,7 +311,7 @@ public class ViewAccessLogTest extends iTrustHTTPTest {
 		assertEquals("iTrust - View My Access Log", wr.getTitle());
 
 		assertFalse(wr.getText().contains("Kelly Doctor"));
-		assertTrue(wr.getText().contains("Beaker Beaker"));
+		assertFalse(wr.getText().contains("Beaker Beaker"));
 
 	}
 	

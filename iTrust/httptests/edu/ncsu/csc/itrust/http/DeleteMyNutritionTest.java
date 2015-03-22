@@ -66,25 +66,17 @@ public class DeleteMyNutritionTest extends iTrustHTTPTest {
 		WebResponse wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
-		wr = wr.getLinkWith("Delete Nutrition Entries").click();
+		wr = wr.getLinkWith("Edit/Delete Nutrition Entries").click();
 		wr = wc.getCurrentPage();
 		
 		assertEquals("iTrust - Edit Nutrition", wr.getTitle());
 		assertTrue(wr.getText().contains("My Nutrition"));
 		
 		//Select entry here...
-		wr.getForms()[0].setParameter("entry", "0");
-		wr = wr.getForms()[0].submit();
+		wr = wr.getLinkWith("Delete #1").click();
 		
 		assertEquals("iTrust - Delete Nutrition Entry", wr.getTitle());
-		assertTrue(wr.getText().contains("My Nutrition"));
-		
-		WebForm patientForm = wr.getForms()[0];
-		
-		// tests if the patient information on the form is updated
-		patientForm.getSubmitButtons()[0].click();
-		wr = wc.getCurrentPage();
-		assertTrue(wr.getText().contains("Diary Entry successfully deleted."));
+		assertTrue(wr.getText().contains("Diary entry successfully deleted."));
 	}
 
 }

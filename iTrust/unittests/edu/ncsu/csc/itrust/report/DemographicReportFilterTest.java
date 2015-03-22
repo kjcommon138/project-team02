@@ -75,7 +75,7 @@ public class DemographicReportFilterTest extends TestCase {
 	public void testFilterByStreetAddr1() throws Exception {
 		filter = new DemographicReportFilter(DemographicReportFilterType.STREET_ADDR, "1247 Noname Dr", factory);
 		List<PatientBean> res = filter.filter(allPatients);
-		assertEquals(8, res.size());
+		assertEquals(11, res.size());
 		assertTrue(res.get(0).getMID() == 1L); // random person
 		assertTrue(res.get(1).getMID() == 3L); // care needs
 		assertTrue(res.get(2).getMID() == 4L); // norecords has
@@ -83,13 +83,13 @@ public class DemographicReportFilterTest extends TestCase {
 		assertTrue(res.get(4).getMID() == 6L); // baby a
 		assertTrue(res.get(5).getMID() == 7L); // baby b
 		assertTrue(res.get(6).getMID() == 8L); // baby c
-		assertTrue(res.get(7).getMID() == 42L); // bad horse
+		assertTrue(res.get(7).getMID() == 27L); // bad horse
 	}
 
 	public void testFilterByStreetAddr2() throws Exception {
 		filter = new DemographicReportFilter(DemographicReportFilterType.STREET_ADDR, "Suite 106", factory);
 		List<PatientBean> res = filter.filter(allPatients);
-		assertEquals(9, res.size());
+		assertEquals(12, res.size());
 		assertTrue(res.get(0).getMID() == 1L); // random person
 		assertTrue(res.get(1).getMID() == 3L); // care needs
 		assertTrue(res.get(2).getMID() == 4L); // norecords has
@@ -97,14 +97,14 @@ public class DemographicReportFilterTest extends TestCase {
 		assertTrue(res.get(4).getMID() == 6L); // baby a
 		assertTrue(res.get(5).getMID() == 7L); // baby b
 		assertTrue(res.get(6).getMID() == 8L); // baby c
-		assertTrue(res.get(7).getMID() == 42L); // bad horse
+		assertTrue(res.get(7).getMID() == 27L); // bad horse
 	}
 
 	public void testFilterByStreetAddr3() throws Exception {
 		filter = new DemographicReportFilter(DemographicReportFilterType.STREET_ADDR,
 				"1247 Noname Dr Suite 106", factory);
 		List<PatientBean> res = filter.filter(allPatients);
-		assertEquals(8, res.size());
+		assertEquals(11, res.size());
 		assertTrue(res.get(0).getMID() == 1L); // random person
 		assertTrue(res.get(1).getMID() == 3L); // care needs
 		assertTrue(res.get(2).getMID() == 4L); // norecords has
@@ -112,7 +112,7 @@ public class DemographicReportFilterTest extends TestCase {
 		assertTrue(res.get(4).getMID() == 6L); // baby a
 		assertTrue(res.get(5).getMID() == 7L); // baby b
 		assertTrue(res.get(6).getMID() == 8L); // baby c
-		assertTrue(res.get(7).getMID() == 42L); // bad horse
+		assertTrue(res.get(7).getMID() == 27L); // bad horse
 	}
 
 	public void testFilterByStreetAddrNoResult() {
@@ -170,7 +170,7 @@ public class DemographicReportFilterTest extends TestCase {
 	public void testFilterByZip2() throws Exception {
 		filter = new DemographicReportFilter(DemographicReportFilterType.ZIP, "27606-1234", factory);
 		List<PatientBean> res = filter.filter(allPatients);
-		assertEquals(15, res.size());
+		assertEquals(18, res.size());
 		assertTrue(res.get(0).getMID() == 1L); // random person
 		assertTrue(res.get(1).getMID() == 3L); // care needs
 		assertTrue(res.get(2).getMID() == 4L); // norecords has
@@ -178,7 +178,7 @@ public class DemographicReportFilterTest extends TestCase {
 		assertTrue(res.get(4).getMID() == 6L); // baby a
 		assertTrue(res.get(5).getMID() == 7L); // baby b
 		assertTrue(res.get(6).getMID() == 8L); // baby c
-		assertTrue(res.get(7).getMID() == 42L); // bad horse
+		assertTrue(res.get(7).getMID() == 27L); // bad horse
 	}
 
 	public void testFilterByZipNoResult() {
@@ -227,13 +227,13 @@ public class DemographicReportFilterTest extends TestCase {
 	public void testFilterByGender() throws Exception {
 		filter = new DemographicReportFilter(DemographicReportFilterType.GENDER, "Female", factory);
 		List<PatientBean> res = filter.filter(allPatients);
-		assertEquals(16, res.size());
+		assertEquals(18, res.size());
 		assertTrue(res.get(0).getMID() == 1L);
 		assertTrue(res.get(1).getMID() == 5L);
 		assertTrue(res.get(2).getMID() == 6L);
 		assertTrue(res.get(3).getMID() == 21L);
-		assertTrue(res.get(4).getMID() == 101L);
-		assertTrue(res.get(5).getMID() == 104L);
+		assertTrue(res.get(4).getMID() == 27L);
+		assertTrue(res.get(5).getMID() == 29L);
 	}
 
 	public void testFilterByGenderNoResult() {
@@ -245,12 +245,12 @@ public class DemographicReportFilterTest extends TestCase {
 	public void testFilterByParentFirstName() throws Exception {
 		filter = new DemographicReportFilter(DemographicReportFilterType.PARENT_FIRST_NAME, "Random", factory);
 		List<PatientBean> res = filter.filter(allPatients);
-		assertEquals(5, res.size());
+		assertEquals(6, res.size());
 		assertTrue(res.get(0).getMID() == 2L);
 		assertTrue(res.get(1).getMID() == 3L);
 		assertTrue(res.get(2).getMID() == 4L);
-		assertTrue(res.get(3).getMID() == 20L);
-		assertTrue(res.get(4).getMID() == 21L);
+		assertTrue(res.get(3).getMID() == 5L);
+		assertTrue(res.get(4).getMID() == 20L);
 	}
 	
 	public void testFilterByParentFirstName2() throws Exception {
@@ -272,12 +272,12 @@ public class DemographicReportFilterTest extends TestCase {
 	public void testFilterByParentLastName() throws Exception {
 		filter = new DemographicReportFilter(DemographicReportFilterType.PARENT_LAST_NAME, "Person", factory);
 		List<PatientBean> res = filter.filter(allPatients);
-		assertEquals(5, res.size());
+		assertEquals(6, res.size());
 		assertTrue(res.get(0).getMID() == 2L);
 		assertTrue(res.get(1).getMID() == 3L);
 		assertTrue(res.get(2).getMID() == 4L);
-		assertTrue(res.get(3).getMID() == 20L);
-		assertTrue(res.get(4).getMID() == 21L);
+		assertTrue(res.get(3).getMID() == 5L);
+		assertTrue(res.get(4).getMID() == 20L);
 	}
 	
 	public void testFilterByParentLastName2() throws Exception {
@@ -325,11 +325,11 @@ public class DemographicReportFilterTest extends TestCase {
 	public void testFilterBySiblingFirstName() throws Exception {
 		filter = new DemographicReportFilter(DemographicReportFilterType.SIBLING_FIRST_NAME, "Baby", factory);
 		List<PatientBean> res = filter.filter(allPatients);
-		assertEquals(4, res.size());
-		assertTrue(res.get(0).getMID() == 5L);
-		assertTrue(res.get(1).getMID() == 6L);
-		assertTrue(res.get(2).getMID() == 7L);
-		assertTrue(res.get(3).getMID() == 8L);
+		assertEquals(9, res.size());
+		assertTrue(res.get(0).getMID() == 2L);
+		assertTrue(res.get(1).getMID() == 3L);
+		assertTrue(res.get(2).getMID() == 4L);
+		assertTrue(res.get(3).getMID() == 5L);
 
 	}
 
@@ -391,11 +391,11 @@ public class DemographicReportFilterTest extends TestCase {
 	public void testFilterByLowerAge() throws Exception { 
 		filter = new DemographicReportFilter(DemographicReportFilterType.LOWER_AGE_LIMIT, "60", factory);
 		List<PatientBean> res = filter.filter(allPatients);
-		assertEquals(4, res.size());
+		assertEquals(7, res.size());
 		assertTrue(res.get(0).getMID() == 1L);
 		assertTrue(res.get(1).getMID() == 3L);
 		assertTrue(res.get(2).getMID() == 4L);
-		assertTrue(res.get(3).getMID() == 42L);
+		assertTrue(res.get(3).getMID() == 27L);
 	}
 
 	public void testFilterByLowerAgeNoResult() throws Exception {

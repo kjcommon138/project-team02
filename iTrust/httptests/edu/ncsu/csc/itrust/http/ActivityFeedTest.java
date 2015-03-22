@@ -51,7 +51,7 @@ public class ActivityFeedTest extends iTrustHTTPTest {
 			entries++;
 			s = s.substring(s.indexOf("<li") + 1);
 		}
-		assertEquals(entries - 3, 60);
+		assertEquals(entries - 3, 62);
 	}
 	
 	public void testUpdateActivityFeed() throws Exception {
@@ -70,7 +70,7 @@ public class ActivityFeedTest extends iTrustHTTPTest {
 			entries++;
 			s = s.substring(s.indexOf("<li") + 1);
 		}
-		assertEquals(20, entries);
+		assertEquals(1, entries);
 	}
 	
 	public void testViewActivityFeed() throws Exception {
