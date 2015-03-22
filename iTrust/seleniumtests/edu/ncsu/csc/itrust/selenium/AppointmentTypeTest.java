@@ -116,6 +116,7 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 		String scheduledDate = "07/06/" + year;
 		Select dropdown = new Select(driver.findElement(By.name("apptType")));
 		dropdown.selectByValue("General Checkup");
+		driver.findElement(By.name("schedDate")).clear();
 		driver.findElement(By.name("schedDate")).sendKeys(scheduledDate);
 		dropdown = new Select(driver.findElement(By.name("time1")));
 		dropdown.selectByValue("09");
@@ -124,7 +125,7 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 		dropdown = new Select(driver.findElement(By.name("time3")));
 		dropdown.selectByValue("AM");
 		driver.findElement(By.name("comment")).sendKeys("This is the next checkup for your blood pressure medication.");
-		driver.findElement(By.name("scheduleButton")).click();
+		driver.findElement(By.name("scheduleButton")).submit();
 
 		assertTrue(driver.getPageSource().contains("iTrust - Schedule an Appointment"));
 		assertTrue(driver.getPageSource().contains("Success"));
