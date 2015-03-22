@@ -2,7 +2,13 @@ package edu.ncsu.csc.itrust.selenium;
 
 import static org.junit.Assert.*;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +16,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import com.meterware.httpunit.WebConversation;
+import com.meterware.httpunit.WebForm;
+import com.meterware.httpunit.WebResponse;
+
+import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class AppointmentTypeTest extends iTrustSeleniumTest{
 	 private static WebDriver driver = null;
@@ -21,5 +34,146 @@ public class AppointmentTypeTest extends iTrustSeleniumTest{
 		super.setUp();
 		gen.clearAllTables();
 		gen.standardData();
+	}
+	
+	public void testAddAppointmentType() throws Exception {
+		// HCP 9000000001 logs in.
+		driver = (HtmlUnitDriver)login("9000000001", "pw");
+		assertTrue(driver.getTitle().contains("iTrust - Admin Home"));
+		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
+		
+		// HCP 9000000001 moves to the edit appointment types page.
+		driver.findElement(By.linkText("Edit Appointment Types")).click();
+		assertTrue(driver.getPageSource().contains("iTrust - Maintain Appointment Types"));
+		assertLogged(TransactionType.APPOINTMENT_TYPE_VIEW, 9000000001L, 0L, "");
+		
+		// HCP 9000000001 adds a new appointment type.
+		driver.findElement(By.name("name")).sendKeys("Immunization");
+		driver.findElement(By.name("duration")).sendKeys("30");
+        driver.findElement(By.name("add")).click();
+		assertLogged(TransactionType.APPOINTMENT_TYPE_ADD, 9000000001L, 0L, "");
+		assertLogged(TransactionType.APPOINTMENT_TYPE_VIEW, 9000000001L, 0L, "");
+	}
+	
+	public void testEditAppointmentTypeDuration() throws Exception {
+		// HCP 9000000001 logs in.
+		driver = (HtmlUnitDriver)login("9000000001", "pw");
+		assertTrue(driver.getTitle().contains("iTrust - Admin Home"));
+		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
+				
+		// HCP 9000000001 moves to the edit appointment types page.
+		driver.findElement(By.linkText("Edit Appointment Types")).click();
+		assertTrue(driver.getPageSource().contains("iTrust - Maintain Appointment Types"));
+		assertLogged(TransactionType.APPOINTMENT_TYPE_VIEW, 9000000001L, 0L, "");
+		
+		// HCP 9000000001 edits an existing appointment type.
+		driver.findElement(By.name("name")).sendKeys("Physical");
+		driver.findElement(By.name("duration")).sendKeys("45");
+		driver.findElement(By.name("update")).click();
+		assertLogged(TransactionType.APPOINTMENT_TYPE_EDIT, 9000000001L, 0L, "");
+		assertLogged(TransactionType.APPOINTMENT_TYPE_VIEW, 9000000001L, 0L, "");
+	}
+	
+	public void testEditAppointmentTypeDurationStringInput() throws Exception {
+		// HCP 9000000001 logs in.
+		driver = (HtmlUnitDriver)login("9000000001", "pw");
+		assertTrue(driver.getTitle().contains("iTrust - Admin Home"));
+		assertLogged(TransactionType.HOME_VIEW, 9000000001L, 0L, "");
+						
+		// HCP 9000000001 moves to the edit appointment types page.
+		driver.findElement(By.linkText("Edit Appointment Types")).click();
+		assertTrue(driver.getPageSource().contains("iTrust - Maintain Appointment Types"));
+		assertLogged(TransactionType.APPOINTMENT_TYPE_VIEW, 9000000001L, 0L, "");
+				
+		// HCP 9000000001 edits an existing appointment type with a bad duration.
+		driver.findElement(By.name("name")).sendKeys("Physical");
+		driver.findElement(By.name("duration")).sendKeys("foo");
+		driver.findElement(By.name("update")).click();
+		assertNotLogged(TransactionType.APPOINTMENT_TYPE_EDIT, 9000000001L, 0L, "");
+		
+		assertTrue(driver.getPageSource().contains("Error: Physical - Duration: must be an integer value."));
+		assertLogged(TransactionType.APPOINTMENT_TYPE_VIEW, 9000000001L, 0L, "");
+	}
+	
+	public void testScheduleAppointment() throws Exception {
+		// HCP 9000000000 logs in.
+		driver = (HtmlUnitDriver)login("9000000000", "pw");
+		assertTrue(driver.getTitle().contains("iTrust - HCP Home"));
+		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
+								
+		// HCP 9000000000 moves to the schedule new appointment page.
+		driver.findElement(By.linkText("Schedule Appointment")).click();
+		assertTrue(driver.getPageSource().contains("iTrust - Please Select a Patient"));
+		
+		// HCP 9000000000 selects patient 1
+		driver.findElement(By.name("UID_PATIENTID")).sendKeys("1");
+		driver.findElement(By.cssSelector("input[value='1']")).submit();
+		assertTrue(driver.getPageSource().contains("iTrust - Schedule an Appointment"));
+	
+		// HCP 9000000000 inputs the appointment information and submits
+		int year = Calendar.getInstance().get(Calendar.YEAR) + 1;
+		String scheduledDate = "07/06/" + year;
+		Select dropdown = new Select(driver.findElement(By.name("apptType")));
+		dropdown.selectByValue("General Checkup");
+		driver.findElement(By.name("schedDate")).sendKeys(scheduledDate);
+		dropdown = new Select(driver.findElement(By.name("time1")));
+		dropdown.selectByValue("09");
+		dropdown = new Select(driver.findElement(By.name("time2")));
+		dropdown.selectByValue("00");
+		dropdown = new Select(driver.findElement(By.name("time3")));
+		dropdown.selectByValue("AM");
+		driver.findElement(By.name("comment")).sendKeys("This is the next checkup for your blood pressure medication.");
+		driver.findElement(By.name("scheduleButton")).click();
+
+		assertTrue(driver.getPageSource().contains("iTrust - Schedule an Appointment"));
+		assertTrue(driver.getPageSource().contains("Success"));
+//		wr = wr.getLinkWith("View My Appointments").click();
+//		assertTrue(wr.getText().contains(scheduledDate+" 09:00 AM"));
+//		assertLogged(TransactionType.APPOINTMENT_ALL_VIEW, 9000000000L, 0L, "");
+
+	}
+	
+	public void testPatientViewUpcomingAppointments() throws Exception {
+		gen.clearAppointments();
+		gen.appointmentCase1();
+		
+		// Patient 2 logs in.
+		driver = (HtmlUnitDriver)login("2", "pw");
+		assertTrue(driver.getTitle().contains("iTrust - Patient Home"));
+		assertLogged(TransactionType.HOME_VIEW, 2L, 0L, "");
+										
+		// Patient 2 moves to the view my appointments page.
+		driver.findElement(By.linkText("View My Appointments")).click();
+		assertTrue(driver.getPageSource().contains("iTrust - View My Messages"));
+		
+		// Create time stamp
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Timestamp time = new Timestamp(new Date().getTime());
+		
+		//Check Table
+		//Row 1
+//		assertTrue(wr.getTables()[0].getRows()[1].getText().contains("Kelly Doctor"));
+//		assertTrue(wr.getTables()[0].getRows()[1].getText().contains("General Checkup"));
+//		Timestamp time1 = new Timestamp(time.getTime()+(14*24*60*60*1000));
+//		String dt1 = dateFormat.format(new Date(time1.getTime()));
+//		assertTrue(wr.getTables()[0].getRows()[1].getText().contains(dt1+" 10:30 AM"));
+//		assertTrue(wr.getTables()[0].getRows()[1].getText().contains("45 minutes"));
+//		assertTrue(wr.getTables()[0].getRows()[1].getText().contains("Read Comment"));
+//		
+//		//Row 2
+//		assertTrue(wr.getTables()[0].getRows()[2].getText().contains("Kelly Doctor"));
+//		assertTrue(wr.getTables()[0].getRows()[2].getText().contains("Consultation"));
+//		assertTrue(wr.getTables()[0].getRows()[2].getText().contains("06/04/"+(Calendar.getInstance().get(Calendar.YEAR)+1)+" 10:30 AM"));
+//		assertTrue(wr.getTables()[0].getRows()[2].getText().contains("30 minutes"));
+//		assertTrue(wr.getTables()[0].getRows()[2].getText().contains("Read Comment"));
+//		
+//		//Row 3
+//		assertTrue(wr.getTables()[0].getRows()[3].getText().contains("Kelly Doctor"));
+//		assertTrue(wr.getTables()[0].getRows()[3].getText().contains("Colonoscopy"));
+//		assertTrue(wr.getTables()[0].getRows()[3].getText().contains("10/14/"+(Calendar.getInstance().get(Calendar.YEAR)+1)+" 08:00 AM"));
+//		assertTrue(wr.getTables()[0].getRows()[3].getText().contains("90 minutes"));
+//		assertTrue(wr.getTables()[0].getRows()[3].getText().contains("No Comment"));
+		
+		assertLogged(TransactionType.APPOINTMENT_ALL_VIEW, 2L, 0L, "");
 	}
 }
