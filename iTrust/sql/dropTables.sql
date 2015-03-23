@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS hcpassignedhos;
 DROP TABLE IF EXISTS hcprelations;
 DROP TABLE IF EXISTS referralmessage;
 DROP TABLE IF EXISTS fooddiary;
+DROP TABLE IF EXISTS diarylabels;
 
 DROP TABLE IF EXISTS labprocedure;
 DROP TABLE IF EXISTS loginfailures;
@@ -23,6 +24,7 @@ DROP TABLE IF EXISTS ovsurvey;
 
 DROP TABLE IF EXISTS appointment;
 DROP TABLE IF EXISTS fooddiary;
+DROP TABLE IF EXISTS diarylabels;
 DROP TABLE IF EXISTS appointmenttype;
 
 

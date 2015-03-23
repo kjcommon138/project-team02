@@ -452,6 +452,13 @@ CREATE TABLE appointment (
 	comment				TEXT
 ) ENGINE=MyISAM;
 
+CREATE TABLE diarylabels (
+		mid BIGINT unsigned,
+		date1 DATE,
+		label TEXT NOT NULL,
+		PRIMARY KEY (mid)
+) ENGINE=MyISAM;
+
 CREATE TABLE fooddiary (
 		entry_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 		patient_id LONG NOT NULL,

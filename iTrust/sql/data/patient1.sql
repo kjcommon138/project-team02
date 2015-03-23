@@ -104,6 +104,10 @@ VALUES (1,'2007-06-12','Lunch','Tuna',1,4,8,6,2,13,9,14)
 VALUES (1,'2007-06-12','Dinner','Cake',1,5,15,16,7,3,6,15)
  ON DUPLICATE KEY UPDATE entry_id = entry_id;
 
+ INSERT INTO diarylabels(mid, date1, label)
+VALUES (1, '2007-06-12', 'Atkins Diet')
+ ON DUPLICATE KEY UPDATE mid = mid;
+ 
 INSERT INTO ovdiagnosis(ICDCode, VisitID) VALUES 
 (350.0, 11),
 (715.09, 11),
