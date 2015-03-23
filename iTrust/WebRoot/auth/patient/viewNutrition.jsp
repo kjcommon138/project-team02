@@ -93,9 +93,8 @@ while(ind < diaries.size()) {
 session.setAttribute("diaries", diaries);
 
 /* Now take care of updating information */
-boolean editLabel = request.getParameter("edit") != null;
 
-if(editLabel) {
+if(request.getParameter("edit") != null) {
 	java.sql.Date date = Date.valueOf(request.getParameter("edit"));
 	String label = request.getParameter("label");
 	
@@ -109,11 +108,60 @@ if(editLabel) {
 		labelAction.editNutritionLabel(labelBean);
 	else
 		labelAction.addNutritionLabel(labelBean);
+	
+	response.sendRedirect("/iTrust/auth/patient/viewNutrition.jsp");
 }
+
+java.sql.Date startDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+java.sql.Date endDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
+if(request.getParameter("startDate") != null && request.getParameter("endDate") != null) {
+	java.util.Date tmpStartDate = new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("startDate"));
+	java.util.Date tmpEndDate = new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("endDate"));
+	
+	startDate = new java.sql.Date(tmpStartDate.getTime());
+	endDate = new java.sql.Date(tmpEndDate.getTime());
+} else
+	for(FoodDiaryBean entry : diaries)
+		if(startDate.compareTo(entry.getEntryDate()) > 0)
+			startDate = entry.getEntryDate();
+
+SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/YYYY");
+
+String strStartDate = sdf.format(startDate);
+String strEndDate = sdf.format(endDate);
 
 int i = 0;
 
+%>
+<form action="viewNutrition.jsp" id="filterForm" method="post">
+	<table class="fTable" align="center">
+		<tr class="subHeader">
+			<td>Start Date:</td>
+			<td>
+				<input name="startDate" value="<%= StringEscapeUtils.escapeHtml("" + (strStartDate)) %>" size="10">
+				<input type=button value="Select Date" onclick="displayDatePicker('startDate');">
+			</td>
+			<td>End Date:</td>
+			<td>
+				<input name="endDate" value="<%= StringEscapeUtils.escapeHtml("" + (strEndDate)) %>">
+				<input type=button value="Select Date" onclick="displayDatePicker('endDate');">
+			</td>
+		</tr>
+	</table>
+	<br>
+	<input type="submit" name="filter" value="Filter">
+</form>
+
+<br>
+
+<%
+
 for(List<FoodDiaryBean> curDiary : dailyEntries) {
+	
+	if(curDiary.get(0).getEntryDate().compareTo(startDate) < 0 ||
+			curDiary.get(0).getEntryDate().compareTo(endDate) > 0)
+		continue;
 	
 	DailyNutritionLabelBean curLabel = null;
 	
@@ -124,7 +172,6 @@ for(List<FoodDiaryBean> curDiary : dailyEntries) {
 		}
 	
 	//creating a better format for the date
-	SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/YYYY");
 	String stringDate = sdf.format(curDiary.get(0).getEntryDate());
 	
 	%>
