@@ -112,7 +112,7 @@ public class DailyNutritionLabelDAOTest {
 	}
 	
 	@Test
-	public final void testinsertLabelEntry() {
+	public final void testInsertLabelEntry() {
 		try {
 			List<DailyNutritionLabelBean> beans = labelDao.getAllEntriesFor(mid);
 			assertEquals(0, beans.size());
@@ -128,9 +128,37 @@ public class DailyNutritionLabelDAOTest {
 	}
 
 	@Test
-	public final void testinsertLabelEntry2() {
+	public final void testInsertLabelEntry2() {
 		try {
 			labelDaoMock.insertLabelEntry(b1);
+			fail("Exception wasn't caught.");
+		} catch (SQLException s) {
+			fail("SQLException caught");
+		} catch (DBException d) {
+			fail("DBException caught");
+		} catch (Exception e) {
+			//If an exception was caught, the test was successful
+		}
+	}
+	
+	@Test
+	public final void testInsertLabelEntry3() {
+		try {
+			b1.setDate(null);
+			fail("Exception wasn't caught.");
+		} catch (SQLException s) {
+			fail("SQLException caught");
+		} catch (DBException d) {
+			fail("DBException caught");
+		} catch (Exception e) {
+			//If an exception was caught, the test was successful
+		}
+	}
+	
+	@Test
+	public final void testInsertLabelEntry4() {
+		try {
+			b1.setLabel(null);
 			fail("Exception wasn't caught.");
 		} catch (SQLException s) {
 			fail("SQLException caught");

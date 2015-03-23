@@ -49,6 +49,9 @@ public class DailyNutritionLabelDAO {
 			
 			results.close();
 			pstring.close();
+			
+			if(abList.size() == 0)
+				return null;
 			return abList.get(0);
 		} catch (SQLException e) {
 			
@@ -97,6 +100,10 @@ public class DailyNutritionLabelDAO {
 		PreparedStatement pstring = null;
 
 		try{
+			DailyNutritionLabelBean bean1 = this.getEntry(entry.getPatient(), entry.getDate());
+			if(bean1 != null)
+				throw new SQLException("Label already exists for this date");
+			
 			conn = factory.getConnection();
 
 			pstring = conn.prepareStatement(
