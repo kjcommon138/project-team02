@@ -23,6 +23,7 @@ DELETE FROM reviews;
 DELETE FROM appointment;
 DELETE FROM appointmenttype;
 DELETE FROM fooddiary;
+DELETE FROM diarylabels;
 
 DELETE FROM personalallergies;
 DELETE FROM personalhealthinformation;
