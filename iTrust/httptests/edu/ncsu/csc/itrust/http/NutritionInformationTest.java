@@ -30,7 +30,7 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		WebResponse wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
-		wr = wr.getLinkWith("View/Add Nutrition Entries").click();
+		wr = wr.getLinkWith("View Nutrition Entries").click();
 		wr = wc.getCurrentPage();
 		assertEquals("iTrust - View Nutrition", wr.getTitle());
 		assertTrue(wr.getText().contains("My Nutrition"));
@@ -49,10 +49,10 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		WebResponse wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
-		wr = wr.getLinkWith("View/Add Nutrition Entries").click();
+		wr = wr.getLinkWith("Add Nutrition Entry").click();
 		wr = wc.getCurrentPage();
-		assertEquals("iTrust - View Nutrition", wr.getTitle());
-		assertTrue(wr.getText().contains("My Nutrition"));
+		assertEquals("iTrust - Add Food Entry", wr.getTitle());
+		assertTrue(wr.getText().contains("Add New Food Entry"));
 		
 		WebForm patientForm = wr.getForms()[0];
 		
@@ -85,10 +85,10 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		WebResponse wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
-		wr = wr.getLinkWith("View/Add Nutrition Entries").click();
+		wr = wr.getLinkWith("Add Nutrition Entry").click();
 		wr = wc.getCurrentPage();
-		assertEquals("iTrust - View Nutrition", wr.getTitle());
-		assertTrue(wr.getText().contains("My Nutrition"));
+		assertEquals("iTrust - Add Food Entry", wr.getTitle());
+		assertTrue(wr.getText().contains("Add New Food Entry"));
 		
 		WebForm patientForm = wr.getForms()[0];
 		
@@ -112,10 +112,10 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		WebResponse wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
-		wr = wr.getLinkWith("View/Add Nutrition Entries").click();
+		wr = wr.getLinkWith("Add Nutrition Entry").click();
 		wr = wc.getCurrentPage();
-		assertEquals("iTrust - View Nutrition", wr.getTitle());
-		assertTrue(wr.getText().contains("My Nutrition"));
+		assertEquals("iTrust - Add Food Entry", wr.getTitle());
+		assertTrue(wr.getText().contains("Add New Food Entry"));
 		
 		WebForm patientForm = wr.getForms()[0];
 		
@@ -147,10 +147,10 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		WebResponse wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
-		wr = wr.getLinkWith("View/Add Nutrition Entries").click();
+		wr = wr.getLinkWith("Add Nutrition Entry").click();
 		wr = wc.getCurrentPage();
-		assertEquals("iTrust - View Nutrition", wr.getTitle());
-		assertTrue(wr.getText().contains("My Nutrition"));
+		assertEquals("iTrust - Add Food Entry", wr.getTitle());
+		assertTrue(wr.getText().contains("Add New Food Entry"));
 		
 		WebForm patientForm = wr.getForms()[0];
 		
@@ -182,10 +182,10 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		WebResponse wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
-		wr = wr.getLinkWith("View/Add Nutrition Entries").click();
+		wr = wr.getLinkWith("Add Nutrition Entry").click();
 		wr = wc.getCurrentPage();
-		assertEquals("iTrust - View Nutrition", wr.getTitle());
-		assertTrue(wr.getText().contains("My Nutrition"));
+		assertEquals("iTrust - Add Food Entry", wr.getTitle());
+		assertTrue(wr.getText().contains("Add New Food Entry"));
 		
 		WebForm patientForm = wr.getForms()[0];
 		
@@ -217,10 +217,10 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		WebResponse wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
-		wr = wr.getLinkWith("View/Add Nutrition Entries").click();
+		wr = wr.getLinkWith("Add Nutrition Entry").click();
 		wr = wc.getCurrentPage();
-		assertEquals("iTrust - View Nutrition", wr.getTitle());
-		assertTrue(wr.getText().contains("My Nutrition"));
+		assertEquals("iTrust - Add Food Entry", wr.getTitle());
+		assertTrue(wr.getText().contains("Add New Food Entry"));
 		
 		WebForm patientForm = wr.getForms()[0];
 		
@@ -252,10 +252,10 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		WebResponse wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
-		wr = wr.getLinkWith("View/Add Nutrition Entries").click();
+		wr = wr.getLinkWith("Add Nutrition Entry").click();
 		wr = wc.getCurrentPage();
-		assertEquals("iTrust - View Nutrition", wr.getTitle());
-		assertTrue(wr.getText().contains("My Nutrition"));
+		assertEquals("iTrust - Add Food Entry", wr.getTitle());
+		assertTrue(wr.getText().contains("Add New Food Entry"));
 		
 		WebForm patientForm = wr.getForms()[0];
 		
@@ -287,10 +287,10 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		WebResponse wr = wc.getCurrentPage();
 		assertEquals("iTrust - Patient Home", wr.getTitle());
 		
-		wr = wr.getLinkWith("View/Add Nutrition Entries").click();
+		wr = wr.getLinkWith("Add Nutrition Entry").click();
 		wr = wc.getCurrentPage();
-		assertEquals("iTrust - View Nutrition", wr.getTitle());
-		assertTrue(wr.getText().contains("My Nutrition"));
+		assertEquals("iTrust - Add Food Entry", wr.getTitle());
+		assertTrue(wr.getText().contains("Add New Food Entry"));
 		
 		WebForm patientForm = wr.getForms()[0];
 		
@@ -306,7 +306,7 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		patientForm.setParameter("numProtein","10");
 		patientForm.getSubmitButtons()[0].click();
 		wr = wc.getCurrentPage();
-		assertTrue(wr.getText().contains("Food Diary Entry Successfully Added"));
+		assertTrue(wr.getText().contains("Turkey Club"));
 	}
 	
 	/*
@@ -323,7 +323,7 @@ public class NutritionInformationTest extends iTrustHTTPTest{
 		
 		wr = wr.getLinkWith("View Patient Nutrition").click();
 		wr = wc.getCurrentPage();
-		assertEquals("iTrust - View Patient Nutrition", wr.getTitle());
-		assertTrue(wr.getText().contains("Patient Nutrition"));
+		assertEquals("iTrust - Please Select a Patient", wr.getTitle());
+		assertTrue(wr.getText().contains("Select a Patient"));
 	}
 }

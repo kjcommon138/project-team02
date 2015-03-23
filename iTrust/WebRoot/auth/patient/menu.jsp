@@ -49,7 +49,10 @@
 	</div>
 	<div class="panel-body" id="nutrition-menu">
 		<ul class="nav nav-sidebar">
-			<li><a href="/iTrust/auth/patient/viewNutrition.jsp">View/Add Nutrition Entries</a>
+			<li><a href="/iTrust/auth/patient/addFoodEntry.jsp">Add Nutrition Entry</a>
+		</ul>
+		<ul class="nav nav-sidebar">
+			<li><a href="/iTrust/auth/patient/viewNutrition.jsp">View Nutrition Entries</a>
 		</ul>
 		<ul class="nav nav-sidebar">
 			<li><a href="/iTrust/auth/patient/editNutrition.jsp">Edit/Delete Nutrition Entries</a>

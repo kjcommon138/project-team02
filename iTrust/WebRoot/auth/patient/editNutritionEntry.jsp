@@ -23,35 +23,88 @@ pageTitle = "iTrust - Edit Nutrition Entry";
 <h2>My Nutrition</h2>
 
 <%
-if (request.getParameter("ent") != null) {
+	if (request.getParameter("ent") == null) {
+		response.sendRedirect("/iTrust/auth/patient/viewNutrition.jsp?error=true");
+		return;
+	}
 	EditMyNutritionAction action = new EditMyNutritionAction(prodDAO, loggedInMID.longValue());
-	List<FoodDiaryBean> diaries = action.getMyFoodDiaryEntries();
-	session.setAttribute("diaries", diaries);
 	String entParameter = request.getParameter("ent");
-	int entIndex = 0;
-
+	
+	int ent = 0;
 	try {
-		entIndex = Integer.parseInt(entParameter);
-		
-		if(entIndex >= diaries.size() || entIndex < 0) {
-			entIndex = 0;
-			response.sendRedirect("oops.jsp");
-		}
+		ent = Integer.parseInt(request.getParameter("ent"));
 	} catch (NumberFormatException nfe) {
-		response.sendRedirect("editNutrition.jsp");
+		response.sendRedirect("viewNutrition.jsp");
 	}
 
-	FoodDiaryBean newEntry = diaries.get(entIndex);
+	FoodDiaryBean newEntry = action.getSingleEntry(ent);
 	Date currDate = newEntry.getEntryDate();
 	SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
 	format.setLenient(false);
 	String dateStr = format.format(currDate);
+	
+	/* Now take care of updating information */
+	boolean formIsFilled = request.getParameter("formIsFilled") != null 
+		&& request.getParameter("formIsFilled").equals("true");
 
-if (diaries.size() > 0) {
-	int index = 0;
+	if (formIsFilled) {
+		String mealType = request.getParameter("mealType");
+		String foodName = request.getParameter("foodName");
+		try {
+			String eDate = request.getParameter("entryDate");
+			double numServing = Double.parseDouble(request.getParameter("numServings"));
+			double numCalories = Double.parseDouble(request.getParameter("numCalories"));
+			double numFat = Double.parseDouble(request.getParameter("numFat"));
+			double numSodium = Double.parseDouble(request.getParameter("numSodium"));
+			double numCarbs = Double.parseDouble(request.getParameter("numCarbs"));
+			double numSugar = Double.parseDouble(request.getParameter("numSugar"));
+			double numFiber = Double.parseDouble(request.getParameter("numFiber"));
+			double numProtein = Double.parseDouble(request.getParameter("numProtein"));
+
+			try {
+				//gets current date
+				Date utilEntryDate = format.parse(eDate);
+				java.sql.Date entryDate = new java.sql.Date(utilEntryDate.getTime());
+				
+				// Take info from fields and put in bean.
+				newEntry.setEntryDate(entryDate);
+				newEntry.setPatient(loggedInMID.longValue());
+				newEntry.setMealType(mealType);
+				newEntry.setFoodName(foodName);
+				newEntry.setServings(numServing);
+				newEntry.setCalories(numCalories);
+				newEntry.setGramsFat(numFat);
+				newEntry.setMilligramSodium(numSodium);
+				newEntry.setGramsCarb(numCarbs);
+				newEntry.setGramsSugar(numSugar);
+				newEntry.setGramsFiber(numFiber);
+				newEntry.setGramsProtein(numProtein);
+				action.editFoodDiaryEntry(newEntry);
+				
+				/* loggingAction.logEvent(
+						TransactionType.PATIENT_EDIT_DIARY, loggedInMID,
+						loggedInMID, ""); */
+				response.sendRedirect("/iTrust/auth/patient/viewNutrition.jsp?edited=true");
+				}	
+			catch (Exception e) {
+				%>
+				<div align=center>
+				<span class="iTrustError"><%=StringEscapeUtils.escapeHtml(e.getMessage())%></span>
+				</div>
+				<%
+			
+			}
+		} catch (NumberFormatException p) {
+			%>
+			<div align=center>
+			<span class="iTrustError"><%=StringEscapeUtils.escapeHtml("Missing or incorrect input.")%></span>
+			</div>
+			<%		
+		}
+	}
 	
 %>
-<form action="editNutritionEntry.jsp?ent=<%= StringEscapeUtils.escapeHtml("" + ( entIndex )) %>" method="post">
+<form action="editNutritionEntry.jsp" method="post">
 	<input type="hidden" name="formIsFilled" value="true">
 
 <table class="fTable" align=center style="width: 500px;">
@@ -132,116 +185,12 @@ if (diaries.size() > 0) {
 </table>
 	<br></br>
 	<div align="center">
+		<input type="hidden" name="ent" value="<%= newEntry.getFoodEntryID()%>">
 		<input type="submit" name="action"
 		       style="font-size: 16pt; font-weight: bold;"
 			   value="Save Entry Changes">
 	</div>
 </form>
 </div>
-	<br></br>
 
-		<table class="fTable" align=center style="width: 500px;">
-		<tr>
-			<th colspan=4>Date</th>
-			<th colspan=2>Meal Type</th>
-			<th colspan=2>Food Name</th>
-			<th colspan=2>Num. Servings</th>
-			<th colspan=2>Num. Calories</th>
-			<th colspan=2>Fat</th>
-			<th colspan=2>Sodium</th>
-			<th colspan=2>Carb</th>
-			<th colspan=2>Sugar</th>
-			<th colspan=2>Fiber</th>
-			<th colspan=2>Protein</th>
-		</tr>
-<%
-
-/* Now take care of updating information */
-boolean formIsFilled = request.getParameter("formIsFilled") != null 
-	&& request.getParameter("formIsFilled").equals("true");
-
-if (formIsFilled) {
-	String mealType = request.getParameter("mealType");
-	String foodName = request.getParameter("foodName");
-	try {
-		String eDate = request.getParameter("entryDate");
-		double numServing = Double.parseDouble(request.getParameter("numServings"));
-		double numCalories = Double.parseDouble(request.getParameter("numCalories"));
-		double numFat = Double.parseDouble(request.getParameter("numFat"));
-		double numSodium = Double.parseDouble(request.getParameter("numSodium"));
-		double numCarbs = Double.parseDouble(request.getParameter("numCarbs"));
-		double numSugar = Double.parseDouble(request.getParameter("numSugar"));
-		double numFiber = Double.parseDouble(request.getParameter("numFiber"));
-		double numProtein = Double.parseDouble(request.getParameter("numProtein"));
-
-		try {
-			//gets current date
-			Date utilEntryDate = format.parse(eDate);
-			java.sql.Date entryDate = new java.sql.Date(utilEntryDate.getTime());
-			
-			// Take info from fields and put in bean.
-			newEntry.setEntryDate(entryDate);
-			newEntry.setPatient(loggedInMID.longValue());
-			newEntry.setMealType(mealType);
-			newEntry.setFoodName(foodName);
-			newEntry.setServings(numServing);
-			newEntry.setCalories(numCalories);
-			newEntry.setGramsFat(numFat);
-			newEntry.setMilligramSodium(numSodium);
-			newEntry.setGramsCarb(numCarbs);
-			newEntry.setGramsSugar(numSugar);
-			newEntry.setGramsFiber(numFiber);
-			newEntry.setGramsProtein(numProtein);
-			action.editFoodDiaryEntry(newEntry);
-			%>
-			<div align=center>
-				<span class="iTrustMessage">Changes to Diary Entry Successfully Saved</span>
-			</div>
-	<%
-			}	
-		catch (Exception e) {
-			%>
-			<div align=center>
-			<span class="iTrustError"><%=StringEscapeUtils.escapeHtml(e.getMessage())%></span>
-			</div>
-			<%
-		
-		}
-	} catch (NumberFormatException p) {
-		%>
-		<div align=center>
-		<span class="iTrustError"><%=StringEscapeUtils.escapeHtml("Missing or incorrect input.")%></span>
-		</div>
-		<%		
-	}
-}
-
-	for(FoodDiaryBean b : diaries) {
-		String row = "<tr";
-%>
-		<%=row+""+((index%2 == 1)?" class=\"alt\"":"")+">"%>
-			<td colspan=4><%= StringEscapeUtils.escapeHtml("" + ( b.getEntryDate() )) %></td>
-			<td colspan=2><%= StringEscapeUtils.escapeHtml("" + ( b.getMealType() )) %></td>
-			<td colspan=2><%= StringEscapeUtils.escapeHtml("" + ( b.getFoodName() )) %></td>
-			<td colspan=2><%= StringEscapeUtils.escapeHtml("" + ( b.getServings() )) %></td>
-			<td colspan=2><%= StringEscapeUtils.escapeHtml("" + ( b.getCalories() )) %></td>
-			<td colspan=2><%= StringEscapeUtils.escapeHtml("" + ( b.getGramsFat() )) %></td>
-			<td colspan=2><%= StringEscapeUtils.escapeHtml("" + ( b.getMilligramsSodium() )) %></td>
-			<td colspan=2><%= StringEscapeUtils.escapeHtml("" + ( b.getGramsCarb() )) %></td>
-			<td colspan=2><%= StringEscapeUtils.escapeHtml("" + ( b.getGramsSugar() )) %></td>
-			<td colspan=2><%= StringEscapeUtils.escapeHtml("" + ( b.getGramsFiber() )) %></td>
-			<td colspan=2><%= StringEscapeUtils.escapeHtml("" + ( b.getGramsProtein() )) %></td>	
-		</tr>
-<%		index ++;
-		}
-	} else { %>
-		<td> <i>You have no entries.</i> </td>
-<%	} %>
-</table>
-<%
-}
-else {
-	response.sendRedirect("editNutrition.jsp");
-} 
-%>
 <%@include file="/footer.jsp" %>
