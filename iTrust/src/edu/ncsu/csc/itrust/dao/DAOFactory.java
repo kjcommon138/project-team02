@@ -383,4 +383,8 @@ public class DAOFactory {
 	public FoodDiaryDAO getFoodDiaryDAO() {
 		return new FoodDiaryDAO(this);
 	}
+	
+	public DailyNutritionLabelDAO getDailyNutritionLabelDAO() {
+		return new DailyNutritionLabelDAO(this);
+	}
 }

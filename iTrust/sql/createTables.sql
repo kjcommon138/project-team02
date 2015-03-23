@@ -455,8 +455,7 @@ CREATE TABLE appointment (
 CREATE TABLE diarylabels (
 		mid BIGINT unsigned,
 		date1 DATE,
-		label TEXT NOT NULL,
-		PRIMARY KEY (mid)
+		label TEXT NOT NULL
 ) ENGINE=MyISAM;
 
 CREATE TABLE fooddiary (
