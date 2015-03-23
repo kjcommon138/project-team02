@@ -54,9 +54,6 @@
 		<ul class="nav nav-sidebar">
 			<li><a href="/iTrust/auth/patient/viewNutrition.jsp">View Nutrition Entries</a>
 		</ul>
-		<ul class="nav nav-sidebar">
-			<li><a href="/iTrust/auth/patient/editNutrition.jsp">Edit/Delete Nutrition Entries</a>
-		</ul>	
 	</div>
 </div>
 
