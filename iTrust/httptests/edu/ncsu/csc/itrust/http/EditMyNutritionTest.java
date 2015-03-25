@@ -67,7 +67,7 @@ public class EditMyNutritionTest extends iTrustHTTPTest {
 		assertTrue(wr.getText().contains("My Nutrition"));
 
 		//Select entry here...
-		WebTable table = wr.getTables()[0];
+		WebTable table = wr.getTables()[1];
 		 
 		wr = table.getTableCell(2, 10).getLinkWith("Edit").click();
 		assertEquals("iTrust - Edit Nutrition Entry", wr.getTitle());
@@ -144,7 +144,7 @@ public class EditMyNutritionTest extends iTrustHTTPTest {
 		assertTrue(wr.getText().contains("My Nutrition"));
 
 		//Select entry here...
-		WebTable table = wr.getTables()[0];
+		WebTable table = wr.getTables()[1];
 		 
 		wr = table.getTableCell(2, 10).getLinkWith("Edit").click();
 		assertEquals("iTrust - Edit Nutrition Entry", wr.getTitle());
@@ -208,7 +208,7 @@ public class EditMyNutritionTest extends iTrustHTTPTest {
 		assertTrue(wr.getText().contains("My Nutrition"));
 
 		//Select entry here...
-		WebTable table = wr.getTables()[0];
+		WebTable table = wr.getTables()[1];
 		 
 		wr = table.getTableCell(2, 10).getLinkWith("Edit").click();
 		assertEquals("iTrust - Edit Nutrition Entry", wr.getTitle());
@@ -285,7 +285,7 @@ public class EditMyNutritionTest extends iTrustHTTPTest {
 		assertTrue(wr.getText().contains("My Nutrition"));
 
 		//Select entry here...
-		WebTable table = wr.getTables()[0];
+		WebTable table = wr.getTables()[1];
 		 
 		wr = table.getTableCell(2, 10).getLinkWith("Edit").click();
 		assertEquals("iTrust - Edit Nutrition Entry", wr.getTitle());
