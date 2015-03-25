@@ -1,29 +1,19 @@
 package edu.ncsu.csc.itrust.selenium;
 
-
-import static org.junit.Assert.*;
-
-import java.util.List;
-
 import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-
-import com.meterware.httpunit.WebConversation;
-import com.meterware.httpunit.WebResponse;
 
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class ComprehensiveReportingTest extends iTrustSeleniumTest{
-	private static WebDriver driver = null;
+	//private static WebDriver driver = null;
 	
 	@Before
 	public void setUp() throws Exception {
 	    // Create a new instance of the driver
-	    driver = new HtmlUnitDriver();
+	    //driver = new HtmlUnitDriver();
 		super.setUp();
 		gen.clearAllTables();
 		gen.standardData();
@@ -31,7 +21,7 @@ public class ComprehensiveReportingTest extends iTrustSeleniumTest{
 	
 	public void testComprehensiveAcceptanceSuccess() throws Exception {
 		// HCP 9000000000 logs in
-		driver = (HtmlUnitDriver)login("9000000000", "pw");
+		WebDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertTrue(driver.getTitle().contains("iTrust - HCP Home"));
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
@@ -49,7 +39,7 @@ public class ComprehensiveReportingTest extends iTrustSeleniumTest{
 	
 	public void testHCPChoosesInvalidPatient() throws Exception {
 		// HCP 9000000000 logs in
-		driver = (HtmlUnitDriver)login("9000000000", "pw");
+		WebDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertTrue(driver.getTitle().contains("iTrust - HCP Home"));
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 		
@@ -66,7 +56,7 @@ public class ComprehensiveReportingTest extends iTrustSeleniumTest{
 	
 	public void testHCPChoosesIncorrectPatient() throws Exception {
 		// HCP 9000000000 logs in
-		driver = (HtmlUnitDriver)login("9000000000", "pw");
+		WebDriver driver = (HtmlUnitDriver)login("9000000000", "pw");
 		assertTrue(driver.getTitle().contains("iTrust - HCP Home"));
 		assertLogged(TransactionType.HOME_VIEW, 9000000000L, 0L, "");
 				
