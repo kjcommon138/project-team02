@@ -1,7 +1,5 @@
 package edu.ncsu.csc.itrust.selenium;
 
-import static org.junit.Assert.*;
-
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,24 +7,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.support.ui.Select;
-
-import com.meterware.httpunit.WebConversation;
-import com.meterware.httpunit.WebForm;
-import com.meterware.httpunit.WebResponse;
-
 import edu.ncsu.csc.itrust.enums.TransactionType;
 
 public class AppointmentTypeTest extends iTrustSeleniumTest{
-	 private static WebDriver driver = null;
+	private WebDriver driver = null;
 		
 	@Before
 	public void setUp() throws Exception {

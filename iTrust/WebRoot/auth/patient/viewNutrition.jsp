@@ -176,7 +176,7 @@ for(List<FoodDiaryBean> curDiary : dailyEntries) {
 	
 	%>
 	
-	<table class="fTable" align="center" id="FoodDiaryTable">
+	<table class="fTable" align="center" id="FoodDiaryTable" name="FoodDiaryTable">
 		<tr>
 			<form action="/iTrust/auth/patient/viewNutrition.jsp" method="post" id="editForm<%=i%>">
 				<input type="hidden" name="edit" value="<%=curDiary.get(0).getEntryDate()%>">
