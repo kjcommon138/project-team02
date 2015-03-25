@@ -73,7 +73,7 @@ public class DeleteMyNutritionTest extends iTrustHTTPTest {
 		assertTrue(wr.getText().contains("My Nutrition"));
 		
 		//Select entry here...
-		WebTable table = wr.getTables()[0];
+		WebTable table = wr.getTables()[1];
 		wr = table.getTableCell(2, 11).getLinkWith("Delete").click();
 		assertEquals("iTrust - Delete Nutrition Entry", wr.getTitle());
 		
